@@ -856,6 +856,38 @@ export interface ApiTagTag extends Schema.CollectionType {
   };
 }
 
+export interface ApiVacancyVacancy extends Schema.CollectionType {
+  collectionName: 'vacancies';
+  info: {
+    singularName: 'vacancy';
+    pluralName: 'vacancies';
+    displayName: 'vacancy';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    position: Attribute.String;
+    salary: Attribute.String;
+    qualification: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::vacancy.vacancy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::vacancy.vacancy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -876,6 +908,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::news-item.news-item': ApiNewsItemNewsItem;
       'api::tag.tag': ApiTagTag;
+      'api::vacancy.vacancy': ApiVacancyVacancy;
     }
   }
 }
